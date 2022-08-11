@@ -100,6 +100,7 @@ lvim.builtin.project.patterns = {
 -- Configure Dashboard
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
+lvim.builtin.alpha.dashboard.section = require("plugins.alpha").config.dashboard.section
 
 -- Configure Notify
 lvim.builtin.notify.active = true
@@ -113,19 +114,6 @@ lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 
 -- Configure Lualine
 lvim.builtin.lualine.options.globalstatus = true
-
--- Configure Dashboard
-lvim.builtin.alpha.dashboard.section.header.val = {
-"  .-')                                (`-.           _   .-')    ",
-" ( OO ).                            _(OO  )_        ( '.( OO )_  ",
-"(_)---\\_) ,--.       ,--.   ,--.,--(_/   ,. \\ ,-.-') ,--.   ,--.)",
-"/    _ |  |  |.-')    \\  `.'  / \\   \\   /(__/ |  |OO)|   `.'   | ",
-"\\  :` `.  |  | OO ) .-')     /   \\   \\ /   /  |  |  \\|         | ",
-" '..`''.) |  |`-' |(OO  \\   /     \\   '   /,  |  |(_/|  |'.'|  | ",
-".-._)   \\(|  '---.' |   /  /\\_     \\     /__),|  |_.'|  |   |  | ",
-"\\       / |      |  `-./  /.__)     \\   /   (_|  |   |  |   |  | ",
-" `-----'  `------'    `--'           `-'      `--'   `--'   `--' ",
-}
 
 -- Configure Bufferline
 lvim.builtin.bufferline.options.always_show_bufferline = true
@@ -459,6 +447,12 @@ lvim.plugins = {
             vim.g.mundo_tree_statusline = " "
         end,
     },
+    -- {
+    --     "goolord/alpha-nvim",
+    --     config = function ()
+    --         require("alpha").setup(require("plugins.alpha").config)
+    --     end
+    -- }
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
