@@ -8,6 +8,13 @@ an executable
 ]]
 -- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
 
+-- Neovide
+local neovide_exists = false
+if vim.fn.exists("g:neovide") ~= 0 then
+    neovide_exists = true
+    vim.o.guifont = "Input"
+end
+
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = false
@@ -87,6 +94,7 @@ lvim.builtin.which_key.mappings["i"] = {
 
 -- Configure Project
 lvim.builtin.project.patterns = {
+    "!=project",
     "!^Plugin",
     ".git",
     "_darcs",
@@ -128,11 +136,14 @@ lvim.builtin.bufferline.options.offsets = {
     },
 }
 
+-- Configure Treesitter
+lvim.builtin.treesitter.autotag.enable = true
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
     "bash",
     "c",
     "javascript",
+    "tsx",
     "json",
     "lua",
     "php",
@@ -152,7 +163,6 @@ lvim.builtin.treesitter.ensure_installed = {
     "jsonc",
     "svelte",
 }
-
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
 
@@ -291,7 +301,7 @@ lvim.plugins = {
                 pre_hook = nil,                 -- Function to run before the scrolling animation starts
                 post_hook = nil,                -- Function to run after the scrolling animation ends
             })
-        end
+        end,
     },
     {
         'kevinhwang91/nvim-hlslens',
@@ -447,12 +457,12 @@ lvim.plugins = {
             vim.g.mundo_tree_statusline = " "
         end,
     },
-    -- {
-    --     "goolord/alpha-nvim",
-    --     config = function ()
-    --         require("alpha").setup(require("plugins.alpha").config)
-    --     end
-    -- }
+    {
+        "windwp/nvim-ts-autotag",
+        config = function()
+            require("nvim-ts-autotag").setup()
+        end,
+    },
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
