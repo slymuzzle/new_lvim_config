@@ -1,3 +1,26 @@
+function os.capture(cmd, raw)
+    local handle = assert(io.popen(cmd, 'r'))
+    local output = assert(handle:read('*a'))
+
+    handle:close()
+
+    if raw then
+        return output
+    end
+
+    output = string.gsub(
+        string.gsub(
+            string.gsub(output, '^%s+', ''),
+            '%s+$',
+            ''
+        ),
+        '[\n\r]+',
+        ' '
+    )
+
+   return output
+end
+
 local function getGreeting(name)
 	local tableTime = os.date("*t")
 	local hour = tableTime.hour
@@ -8,6 +31,7 @@ local function getGreeting(name)
 		[4] = "  Good evening",
 		[5] = "望 Good night",
 	}
+
 	local greetingIndex = nil
 	if hour == 23 or hour < 7 then
 		greetingIndex = 1
@@ -20,7 +44,16 @@ local function getGreeting(name)
 	elseif hour >= 21 then
 		greetingIndex = 5
 	end
-	return greetingsTable[greetingIndex] .. ", " .. name
+
+    local cowsay = os.getenv("HOME") .. "/.config/lvim/external/cowsay/cowsay --random "
+    local text = greetingsTable[greetingIndex] .. ", " .. name
+
+    local greeting = os.capture( cowsay .. text, true)
+    if greeting == nil or greeting == '' then
+        greeting = text
+    end
+
+	return greeting
 end
 
 local M = {}
@@ -65,7 +98,7 @@ M.config ={
                 val = getGreeting(os.getenv("USER")),
                 opts = {
                     position = "center",
-                    hl = "Label",
+                    -- hl = "Label",
                 },
             },
         }
