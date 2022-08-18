@@ -33,6 +33,8 @@ vim.opt.numberwidth = 4
 lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
+lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
 -- override a default keymapping
@@ -122,6 +124,7 @@ lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 
 -- Configure Lualine
 lvim.builtin.lualine.options.globalstatus = true
+lvim.builtin.lualine.options.disabled_filetypes = { }
 
 -- Configure Bufferline
 lvim.builtin.bufferline.options.always_show_bufferline = true
@@ -471,13 +474,13 @@ lvim.plugins = {
 --   -- enable wrap mode for json files only
 --   command = "setlocal wrap",
 -- })
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "zsh",
-    callback = function()
-        -- let treesitter use bash highlight for zsh files as well
-        require("nvim-treesitter.highlight").attach(0, "bash")
-    end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = "zsh",
+--     callback = function()
+--         -- let treesitter use bash highlight for zsh files as well
+--         require("nvim-treesitter.highlight").attach(0, "bash")
+--     end,
+-- })
 
 -- Add executables to config.lua
 -- { exec, keymap, name}
