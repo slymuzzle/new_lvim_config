@@ -205,7 +205,7 @@ lvim.builtin.treesitter.highlight.enabled = true
 
 -- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. !!Requires `:LvimCacheReset` to take effect!!
 -- ---`:LvimInfo` lists which server(s) are skipped for the current filetype
--- vim.tbl_map(function(server)
+-- lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
 --   return server ~= "emmet_ls"
 -- end, lvim.lsp.automatic_configuration.skipped_servers)
 
@@ -296,11 +296,16 @@ lvim.plugins = {
     "NvChad/nvim-colorizer.lua",
     config = function()
       require('colorizer').setup({
-        "*",
-        "!NvimTree",
-        "!sql",
-        "!mason.nvim"
-      }, { names = false })
+        filetypes = {
+            "*",
+            "!NvimTree",
+            "!sql",
+            "!mason.nvim",
+        },
+        user_default_options = {
+            names = false,
+        },
+      })
     end
   },
   {
@@ -490,7 +495,15 @@ lvim.plugins = {
     config = function()
       require("nvim-navic").setup()
     end,
-  }
+  },
+  {
+    "potamides/pantran.nvim",
+    config = function()
+        require("pantran").setup({
+            default_engine = "deepl",
+        })
+    end,
+  },
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
