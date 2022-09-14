@@ -45,7 +45,7 @@ local function getGreeting(name)
 		greetingIndex = 5
 	end
 
-    local cowsay = os.getenv("HOME") .. "/.config/lvim/external/cowsay/cowsay --random "
+    local cowsay = os.getenv("HOME") .. "/.config/lvim/external/bin/cowsay --random "
     local text = greetingsTable[greetingIndex] .. ", " .. name
 
     local greeting = os.capture( cowsay .. text, true)

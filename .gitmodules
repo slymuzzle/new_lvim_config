@@ -1,0 +1,6 @@
+[submodule "external/sources/cowsay"]
+	path = external/sources/cowsay
+	url = https://github.com/Code-Hex/Neo-cowsay.git
+[submodule "external/sources/zk"]
+	path = external/sources/zk
+	url = https://github.com/mickael-menu/zk.git

@@ -38,6 +38,11 @@ lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
+
+lvim.keys.normal_mode["<C-k>"] = "<cmd>lua require('goto-preview').goto_preview_definition()<CR>"
+lvim.keys.normal_mode["<C-r>"] = "<cmd>lua require('goto-preview').goto_preview_references()<CR>"
+lvim.keys.normal_mode["<C-c>"] = "<cmd>lua require('goto-preview').close_all_win()<CR>"
+
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
 -- override a default keymapping
@@ -418,12 +423,13 @@ lvim.plugins = {
         "rmagatti/goto-preview",
         config = function()
             require('goto-preview').setup {
-                width = 120; -- Width of the floating window
-                height = 25; -- Height of the floating window
-                default_mappings = true; -- Bind default mappings
-                debug = false; -- Print debug information
-                opacity = nil; -- 0-100 opacity level of the floating window where 100 is fully transparent.
-                post_open_hook = nil -- A function taking two arguments, a buffer and a window to be ran as a hook.
+                width = 120, -- Width of the floating window
+                height = 25, -- Height of the floating window
+                default_mappings = false, -- Bind default mappings
+                resizing_mappings = true,
+                debug = false, -- Print debug information
+                opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
+                post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
                 -- You can use "default_mappings = true" setup option
                 -- Or explicitly set keybindings
                 -- vim.cmd("nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>")
@@ -526,12 +532,21 @@ lvim.plugins = {
             })
         end
     },
-    -- {
-    --     "mickael-menu/zk-nvim",
-    --     config = function()
-    --         require("zk").setup({})
-    --     end,
-    -- }
+    {
+        "mickael-menu/zk-nvim",
+        config = function()
+            require("zk").setup({
+                lsp = {
+                    picker = "telescope",
+                    config = {
+                        cmd = { os.getenv("HOME") .. "/.config/lvim/external/bin/zk", "lsp" },
+                        cmd_env = { ZK_NOTEBOOK_DIR = "$HOME/Wiki/sly-wiki.md" },
+                        name = "zk",
+                    },
+                }
+            })
+        end,
+    }
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
