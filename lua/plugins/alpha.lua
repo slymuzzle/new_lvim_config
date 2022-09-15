@@ -86,6 +86,7 @@ M.config ={
                     { "SPC P", "  Recent Projects ", "<CMD>Telescope projects<CR>" },
                     { "SPC s r", "  Recently Used Files", "<CMD>Telescope oldfiles<CR>" },
                     { "SPC s t", "  Find Word", "<CMD>Telescope live_grep<CR>" },
+                    { "SPC W", "  Wiki", "<cmd>ZkNotes<cr>" },
                     {
                         "SPC L c",
                         "  Configuration",

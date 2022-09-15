@@ -40,7 +40,6 @@ lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 
 lvim.keys.normal_mode["<C-k>"] = "<cmd>lua require('goto-preview').goto_preview_definition()<CR>"
-lvim.keys.normal_mode["<C-r>"] = "<cmd>lua require('goto-preview').goto_preview_references()<CR>"
 lvim.keys.normal_mode["<C-c>"] = "<cmd>lua require('goto-preview').close_all_win()<CR>"
 
 -- unmap a default keymapping
@@ -70,7 +69,7 @@ lvim.builtin.telescope.defaults.mappings = {
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 
 lvim.builtin.which_key.mappings["t"] = {
-    name = "+Trouble",
+    name = "Trouble",
     r = { "<cmd>Trouble lsp_references<cr>", "References" },
     f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
     d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
@@ -103,6 +102,8 @@ lvim.builtin.which_key.mappings["i"] = {
     i = { "<cmd>PickIconsInsert<cr>", "Insert icons" },
     s = { "<cmd>PickAltFontAndSymbolsInsert<cr>", "Insert symbols" },
 }
+
+lvim.builtin.which_key.mappings["N"] = { "<cmd>ZkNotes<cr>",  "Wiki" }
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -536,14 +537,17 @@ lvim.plugins = {
         "mickael-menu/zk-nvim",
         config = function()
             require("zk").setup({
+                picker = "telescope",
                 lsp = {
-                    picker = "telescope",
                     config = {
                         cmd = { os.getenv("HOME") .. "/.config/lvim/external/bin/zk", "lsp" },
-                        cmd_env = { ZK_NOTEBOOK_DIR = "$HOME/Wiki/sly-wiki.md" },
                         name = "zk",
                     },
-                }
+                },
+                auto_attach = {
+                    enabled = true,
+                    filetypes = { "markdown" },
+                },
             })
         end,
     }
@@ -557,11 +561,10 @@ lvim.plugins = {
 -- })
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "markdown",
-    command = "set awa",
-})
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "markdown",
-    command = "setlocal nospell",
+    callback = function()
+        vim.cmd [[set awa]]
+        vim.cmd [[setlocal nospell]]
+    end
 })
 
 -- Add executables to config.lua
