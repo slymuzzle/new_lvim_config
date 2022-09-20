@@ -21,6 +21,14 @@ function os.capture(cmd, raw)
    return output
 end
 
+local function split(s, delimiter)
+  local result = {}
+  for match in (s .. delimiter):gmatch("(.-)" .. delimiter) do
+    table.insert(result, match)
+  end
+  return result
+end
+
 local function getGreeting(name)
 	local tableTime = os.date("*t")
 	local hour = tableTime.hour
@@ -53,7 +61,7 @@ local function getGreeting(name)
         greeting = text
     end
 
-	return greeting
+	return split(greeting, "\n")
 end
 
 local M = {}
@@ -99,7 +107,7 @@ M.config ={
                 val = getGreeting(os.getenv("USER")),
                 opts = {
                     position = "center",
-                    -- hl = "Label",
+                    hl = "Label",
                 },
             },
         }

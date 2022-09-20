@@ -13,10 +13,6 @@ if vim.fn.exists("g:neovide") ~= 0 then
     vim.o.guifont = "Input"
 end
 
--- resources for config
--- local utils = require("config-utils")
--- local navic_present, navic = pcall(require, "nvim-navic")
-
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = false
@@ -140,12 +136,6 @@ lvim.builtin.nvimtree.setup.filters.exclude = { "node_modules" }
 -- Configure Lualine
 lvim.builtin.lualine.options.globalstatus = true
 lvim.builtin.lualine.options.disabled_filetypes = {}
--- Navic lualine component
--- if navic_present then
---   lvim.builtin.lualine.sections.lualine_c = {
---     { navic.get_location, cond = navic.is_available }
---   }
--- end
 
 -- Configure Bufferline
 lvim.builtin.bufferline.options.always_show_bufferline = true
@@ -225,10 +215,6 @@ lvim.builtin.treesitter.highlight.enabled = true
 
 -- -- you can set a custom on_attach function that will be used for all the language servers
 -- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
--- local navic_list = {
---   "intelephense",
---   "sumneko_lua",
--- }
 
 -- lvim.lsp.on_attach_callback = function(client, bufnr)
 -- local function buf_set_option(...)
@@ -236,10 +222,6 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- end
 -- Enable completion triggered by <c-x><c-o>
 -- buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-
--- if utils.contains(navic_list, client.name) and navic_present then
---   navic.attach(client, bufnr)
--- end
 -- end
 
 -- -- set a formatter, this will override the language server formatting capabilities (if it exists)
@@ -461,8 +443,6 @@ lvim.plugins = {
                 enabled = true,
             }
         end,
-        -- Uncomment next line if you want to follow only stable versions
-        -- tag = "*"
     },
     {
         'esensar/nvim-dev-container',
@@ -504,13 +484,6 @@ lvim.plugins = {
             require("nvim-ts-autotag").setup()
         end,
     },
-    -- {
-    --   "SmiteshP/nvim-navic",
-    --   requires = "neovim/nvim-lspconfig",
-    --   config = function()
-    --     require("nvim-navic").setup()
-    --   end,
-    -- },
     {
         "potamides/pantran.nvim",
         config = function()
